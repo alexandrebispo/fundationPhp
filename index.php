@@ -11,18 +11,14 @@
         <div class="page-header">
                 <?php
 
-                if(isset($_GET['pagina']) && file_exists('includes/'.$_GET['pagina'])):
-                    require_once('includes/'.$_GET['pagina']);
-                else:   ?>
-                    <div class="alert alert-danger" role="alert">
-                        <strong>Aviso!</strong> esta página não existe.
-                    </div>
+             //página com funções
+                require_once("engine/funcoes.php");
 
-               <?php
-                    require_once("includes/home.php");
-               endif;
+            //Página para tratamento de rotas
+                require_once("engine/rotas.php");
 
-               ?>
+                $getPageContent();
+             ?>
 
 
         </div> <!-- /container -->
