@@ -1,7 +1,0 @@
-To: alexandrebispo.mestre@gmail.com
-Subject: <?php=$_POST['assunto'] ?>
-From: <?php=$_POST['email'] ?>
-Reply-To: <?php=$_POST['email'] ?>
-X-Mailer: PHP/5.4.7
-
-
