@@ -1,41 +1,43 @@
 <?php
-require_once("./funcoes.php");
-require_once("./../model/conexao.php");
 
-if (preg_match('/\.(?:png|jpg|jpeg|gif|css|js)$/', $_SERVER["REQUEST_URI"])) {
+require_once(__DIR__."/../engine/funcoes.php");
+require_once(__DIR__."/../engine/config.php");
+
+if(preg_match('/\.(?:png|jpg|jpeg|gif|css|js)$/', $_SERVER["REQUEST_URI"])){
     return false;
-} elseif (COUNT(getRoute()) > 0) {
+}else{
+
     $getPath = curRoute();
-    $sql = "SELECT * FROM education.pages WHERE title = :titulo";
-    $stmt = $conn->prepare($sql);
-    $stmt->bindValue(":titulo", $getPath);
-    $stmt->execute();
-    $knownRoutes = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $pageName = $knownRoutes['content'];
+    // Verifica se Rota esta vazia e retorna TRUE, caso esteja.
+    if(empty($getPath) || $getPath == "home"){
+       $pageName = "home";
 
-    $getPageContent = function () use ($pageName) {
-        echo $pageName;
-    };
-    return $getPageContent();
+    //Verifica se esta setado a rota e se ela esta definida, caso false retorna page 404.
+    }elseif(isset($getPath) && in_array($getPath, $config['route']) != $config['route']){
+        $pageName = "404";
 
+    //Caso seja solicitado uma busca.
+    }elseif($getPath == "busca"){
 
-} else {
-    $getPath = 404;
-    $sql = "SELECT * FROM pages WHERE title = :titulo";
-    $stmt = $conn->prepare($sql);
+        $pageName = "search";
 
-    $stmt->bindValue("titulo", $getPath);
-    $stmt->execute();
-    $knownRoutes = $stmt->fetch(PDO::FETCH_ASSOC);
+    //Caso procure a página contato
+    }elseif($getPath == "contato"){
+        $pageName = "contato";
 
-    $pageName = $knownRoutes;
-
-    $getPageContent = function () use ($pageName) {
-        echo $pageName;
-    };
-    return $getPageContent();
-
+    //Caso, seja existente a rota solicitada
+    }else{
+        $pageName = $getPath;
+    }
 }
+
+//Função anonima para incluir a página de conteúdo.
+$getPageContent = function () use ($pageName) {
+    require_once("/../includes/".$pageName.".php");
+
+};
+
+return $getPageContent();
 
 ?>

@@ -1,3 +1,1 @@
-<?php
-    echo('<h1>home - Banco de Dados!</h1>');
-?>
+<h1>home - Banco de Dados!</h1>

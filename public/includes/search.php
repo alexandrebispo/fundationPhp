@@ -1,21 +1,20 @@
 <?php
-require_once("../model/conexao.php");
+require_once(__DIR__ . "/../engine/search.php");
 
-$sql = "SELECT * FROM pages WHERE content like :searching";
-$stmt = $conn->prepare($sql);
-$stmt->bindValue("searching", "%{$search}%");
-$stmt->execute();
-$knownSearch = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$Searching = $_POST['procurar'];
 
-if($knowSearch != NULL):
-    while($knowSearch > 0):
+if(!empty($Searching)):
+    $search = getSearch($Searching);
+
+    foreach($search as $res):
+        ?>
+        <h1><?php echo $res['title'];  ?></h1><br />
+        <p><?php echo $res['content'];  ?></p>
+        <?php $res++  ?>
+        <hr /><br />
+    <?php
+    endforeach;
+else:
     ?>
-        <h1><?php echo $knowSearch['title'];  ?></h1><br />
-            <p><?php echo $knowSearch['content'];  ?></p>
-                <hr /><br />
-<?php
-    endwhile;
- else:
-?>
-            <h1>Não encontrei sua busca!</h1>
- <?php endif; ?>
+    <h1>Não encontrei sua busca!</h1>
+<?php endif; ?>
