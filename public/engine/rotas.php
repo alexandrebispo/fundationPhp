@@ -34,7 +34,7 @@ if(preg_match('/\.(?:png|jpg|jpeg|gif|css|js)$/', $_SERVER["REQUEST_URI"])){
 
 //Função anonima para incluir a página de conteúdo.
 $getPageContent = function () use ($pageName) {
-    require_once("/../includes/".$pageName.".php");
+    require_once(__DIR__ . "/../includes/".$pageName.".php");
 
 };
 

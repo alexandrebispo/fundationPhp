@@ -21,5 +21,5 @@ OBS para uso:
 5 - para recuperar a conexão basta chamar a function getDb();
 6 - As paginas de view estão dentro de /includes
 
-Pronto, desta forma estara tudo funcionando em perfeita armonia;
+Pronto, desta forma estará tudo funcionando em perfeita armonia;
 
